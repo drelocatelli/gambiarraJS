@@ -1,16 +1,19 @@
 function createComponent(name) {
-    document.querySelector(`Component[name=${name}]`).prepend(document.createElement(`x-${name.toLowerCase()}`))
+    const findDocument = document.querySelector(`Component[name=${name}]`)
+    const newDocument = document.createElement(`x-${name.toLowerCase()}`);
+    findDocument.prepend(newDocument);
 }
 
 defineComponents();
+insertAxios();
 window.onload = () => {
-    insertAxios();
+    defineTitle();
     const components = Array.from(document.querySelectorAll('Component'));
     components.map(item => {
         const name = item.getAttribute('name')
         
         createComponent(name);
-    
+
         var Element = JSON.parse(JSON.stringify(name));
         Element = function () {
             return Reflect.construct(HTMLElement, [], Element)
@@ -18,7 +21,7 @@ window.onload = () => {
         Element.prototype = Object.create(HTMLElement.prototype)
     
         Element.prototype.connectedCallback = function () {
-            this.innerHTML = eval(name)();
+            this.innerHTML = `<div style='display: ${item.getAttribute('block') != null ? 'block' : 'inline'}'>${eval(name)()}</div>`;
         }
     
     
@@ -26,12 +29,18 @@ window.onload = () => {
     })
 }
 
+function defineTitle() {
+    const titleRegex = new RegExp('#.*');
+    const title = document.body.innerHTML.match(titleRegex)[0]
+    document.title = title.replace('#', '');
+    document.body.innerHTML = document.body.innerHTML.replace(title, '')
+}
+
 function defineComponents() {
     const imports = document.createElement('script');
     imports.src = 'src/components.js'
     document.head.prepend(imports);
 }
-
 
 function insertAxios() {
     // insert axios
