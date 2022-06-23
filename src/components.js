@@ -1,7 +1,5 @@
-defineComponent(['Navbar', 'Footer']);
-
 function Navbar() {
-    return 'Navbar aqui'
+    return 'aaaaaaaaaa';
 }
 
 function Footer() {
