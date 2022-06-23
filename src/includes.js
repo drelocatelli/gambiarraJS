@@ -1,5 +1,5 @@
 function createComponent(name) {
-    document.querySelector(name).append(document.createElement(`x-${name.toLowerCase()}`))
+    document.querySelector(name).prepend(document.createElement(`x-${name.toLowerCase()}`))
 }
 
 function defineComponent(component) {

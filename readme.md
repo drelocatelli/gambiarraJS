@@ -1,0 +1,1 @@
+Apenas uma gambiarra de reutilização de components html
